@@ -1,0 +1,7 @@
+// 提示文件帮助 Visual Studio IDE 解释 Visual C++ 标识符,
+// 如函数和宏的名称。
+// 有关详细信息，请参见 https://go.microsoft.com/fwlink/?linkid=865984
+#define MAVLINKEventDefine(EVENT) YModuleDefineEventCb(EVENT, const mavlink_message_t&, const mavlink_status_t&)
+#define YModuleDefineEventCb(EVENT, __VA_ARGS__) private: std::function<void(__VA_ARGS__)> EVENT = [](__VA_ARGS__){}; template<class _F> void setEventCbImpl(_F& obj, void (_F::*func)(__VA_ARGS__)) { EVENT = std::bind(func, &obj, std::placeholders::_1); } void setEventCbImpl(const std::function<void(__VA_ARGS__)>& func) { EVENT = func; }
+#define YModuleDefineEventCb(EVENT, __VA_ARGS__) private: std::function<void(__VA_ARGS__)> EVENT = [](__VA_ARGS__){}; public: template<class _F> void set##EVENTCbImpl(_F& obj, void (_F::*func)(__VA_ARGS__)) { EVENT = std::bind(func, &obj, std::placeholders::_1); } void set##EVENTCbImpl((const std::function<void(__VA_ARGS__)>& func) { EVENT = func; }
+#define YModuleInvokeEventCb(EVENT, __VA_ARGS__) EVENT(__VA_ARGS__)
