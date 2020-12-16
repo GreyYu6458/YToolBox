@@ -5,20 +5,6 @@
 #include "serial/SerialCommModule.hpp"
 #include <iostream>
 
-class SumModule : public StaticBaseModule<SumModule>
-{
-private:
-	YModule(SumModule)
-
-	double sum = 0;
-	void  execute(const double& e) {
-		sum += e;
-		YModuleInvokeEventCb(ON_CAL_CMP, sum);
-	}
-
-	YModuleDefineEventCb(ON_CAL_CMP, const double&)
-};
-
 int main()
 {
 	SerialCommModule serial_comm_module;

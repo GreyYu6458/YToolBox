@@ -103,9 +103,10 @@ public:
 	void stop() {
 		if (!is_open()) return;
 
-		_is_open = false;
+		
 		_is->post(boost::bind(&SerialCommModule::close, this));
 		background_thread.join();
+		_is_open = false;
 		_is->reset();
 		if (error_status())
 		{
@@ -115,8 +116,7 @@ public:
 	}
 
 	void execute() {
-		if (port.size() == 0)
-		{
+		if (port.size() == 0){
 			on_port_not_specified();
 			_is_open = false;
 			return;
@@ -128,7 +128,6 @@ public:
 			_sp->set_option(boost_serial::stop_bits(_stop_bits));
 			_sp->set_option(boost_serial::flow_control(_flow_control));
 			_sp->set_option(boost_serial::baud_rate(_baud_rate));
-
 			// IO 服务加入read方法
 			_is->post(boost::bind(&SerialCommModule::read, this));
 			// 新建一个IO线程
@@ -136,8 +135,7 @@ public:
 			// 生命周期交换到成员线程
 			background_thread.swap(t);
 			_is_open = true;
-		}
-		catch (boost::system::system_error& err) {
+		}catch (boost::system::system_error& err) {
 			on_port_open_failed(port, err);
 			_is_open = false;
 		}
