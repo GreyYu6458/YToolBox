@@ -1,11 +1,8 @@
 ﻿include_directories(module)
 
 
-set(CMAKE_PREFIX_PATH "D:/DevelopmentKits/c_cpp/Boost/boost_1_74_0")
-find_package(Boost REQUIRED)
+set(Boost_LIBRAYIES_DIR "D:/DevelopmentKits/c_cpp/Boost/boost_1_74_0/lib" )
+set(Boost_INCLUDE_DIRS "D:/DevelopmentKits/c_cpp/Boost/boost_1_74_0/include/boost-1_74")
 include_directories(${Boost_INCLUDE_DIRS})
 
-
-add_subdirectory(YGUI)
-
-add_subdirectory(module/test)
+add_subdirectory(test)
